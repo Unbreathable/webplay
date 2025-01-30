@@ -33,6 +33,7 @@ type Attempt struct {
 	Token     string // Token to identify the attempt
 	Name      string // Name of the sender
 	Challenge string // Code the sender has to enter
+	Accepted  bool   // Whether the attempt has been accepted
 }
 
 func makeAttempt(name string) *Attempt {
