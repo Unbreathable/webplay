@@ -7,14 +7,8 @@ import (
 	"github.com/pion/webrtc/v4"
 )
 
-// Route: /create_receiver
+// Route: /receiver/create
 func createReceiver(c *fiber.Ctx) error {
-
-	// Parse the request
-	var req webrtc.SessionDescription
-	if err := c.BodyParser(&req); err != nil {
-		return c.SendStatus(fiber.StatusBadRequest)
-	}
 
 	// Claim the receiver
 	receiver, valid := claimReciever()
@@ -28,8 +22,8 @@ func createReceiver(c *fiber.Ctx) error {
 }
 
 type Receiver struct {
-	Token          string
-	currentAttempt *Attempt // The current attempt
+	Token         string
+	curretnSender *Sender // The current attempt
 
 	// WebRTC stuff
 	connection *webrtc.PeerConnection
@@ -75,23 +69,23 @@ func checkReceiverState(c *fiber.Ctx) error {
 	}
 
 	// Check if there is a current attempt
-	if currentReceiver.currentAttempt != nil {
+	if currentReceiver.curretnSender != nil {
 
 		// Check if the attempt has been accepted and tell the receiver to wait for a connection in that case
-		if currentReceiver.currentAttempt.Accepted {
+		if currentReceiver.curretnSender.Accepted {
 			return c.JSON(fiber.Map{
 				"exists":    true,
 				"completed": true,
-				"name":      currentReceiver.currentAttempt.Name,
-				"code":      currentReceiver.currentAttempt.Challenge,
+				"name":      currentReceiver.curretnSender.Name,
+				"code":      currentReceiver.curretnSender.Challenge,
 			})
 		}
 
 		return c.JSON(fiber.Map{
 			"exists":    true,
 			"completed": false,
-			"name":      currentReceiver.currentAttempt.Name,
-			"code":      currentReceiver.currentAttempt.Challenge,
+			"name":      currentReceiver.curretnSender.Name,
+			"code":      currentReceiver.curretnSender.Challenge,
 		})
 	}
 

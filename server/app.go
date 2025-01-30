@@ -1,12 +1,9 @@
 package main
 
 import (
-	"log"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/pion/ice/v4"
 	"github.com/pion/webrtc/v4"
 )
 
@@ -22,20 +19,24 @@ func main() {
 	// Register all the endpoints
 	app.Post("/receiver/create", createReceiver)
 	app.Post("/receiver/check_state", checkReceiverState)
+	app.Post("/sender/create", createSender)
+	app.Post("/sender/attempt", checkAttempt)
 
 	// Create a new setting engine
-	engine := webrtc.SettingEngine{}
+	/*
+		engine := webrtc.SettingEngine{}
 
-	// Set the port
-	mux, err := ice.NewMultiUDPMuxFromPort(5000)
-	if err != nil {
-		log.Fatal("Couldn't create port multiplexer for the SFU:", err)
-	}
-	engine.SetICEUDPMux(mux)
+		// Set the port
+		mux, err := ice.NewMultiUDPMuxFromPort(5000)
+		if err != nil {
+			log.Fatal("Couldn't create port multiplexer for the SFU:", err)
+		}
+		engine.SetICEUDPMux(mux)
 
-	// Create the api using the settings engine
-	api = webrtc.NewAPI(webrtc.WithSettingEngine(engine))
+		// Create the api using the settings engine
+		api = webrtc.NewAPI(webrtc.WithSettingEngine(engine))
+	*/
 
 	// Start the server
-	app.Listen(":3000")
+	app.Listen("127.0.0.1:3000")
 }
