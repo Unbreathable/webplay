@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SenderConnectedPage extends StatefulWidget {
+class SenderConnectPage extends StatefulWidget {
   final String token;
 
-  const SenderConnectedPage({super.key, required this.token});
+  const SenderConnectPage({super.key, required this.token});
 
   @override
-  State<SenderConnectedPage> createState() => _SenderConnectedPageState();
+  State<SenderConnectPage> createState() => _SenderConnectPageState();
 }
 
-class _SenderConnectedPageState extends State<SenderConnectedPage> {
+class _SenderConnectPageState extends State<SenderConnectPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

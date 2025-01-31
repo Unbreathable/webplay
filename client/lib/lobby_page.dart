@@ -1,5 +1,6 @@
 import 'package:client/receiver/receiver_create_page.dart';
 import 'package:client/sender/sender_create_page.dart';
+import 'package:client/util/screen_select_dialog.dart';
 import 'package:client/vertical_spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,11 @@ class _LobbyPageState extends State<LobbyPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            ElevatedButton(
+              onPressed: () => showDialog(context: context, builder: (context) => ScreenSelectDialog()),
+              child: Text("Try screen sharing"),
+            ),
+            verticalSpacing(defaultSpacing),
             ElevatedButton(
               onPressed: () => popAllAndPush(context, MaterialPageRoute(builder: (context) => ReceiverCreatePage())),
               child: Text("Start receiver"),

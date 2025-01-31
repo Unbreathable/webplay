@@ -35,7 +35,7 @@ class _CodeEnterPageState extends State<CodeEnterPage> with SignalsMixin {
       return;
     }
 
-    popAllAndPush(context, MaterialPageRoute(builder: (context) => SenderConnectedPage(token: widget.token)));
+    popAllAndPush(context, MaterialPageRoute(builder: (context) => SenderConnectPage(token: widget.token)));
   }
 
   @override
