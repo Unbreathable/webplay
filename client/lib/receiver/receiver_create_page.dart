@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:client/lobby_page.dart';
-import 'package:client/receiver/code_display_page.dart';
+import 'package:client/receiver/receiver_code_page.dart';
 import 'package:client/vertical_spacing.dart';
 import 'package:client/web.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class _ReceiverCreatePageState extends State<ReceiverCreatePage> with SignalsMix
 
     // Get the output from the request and go to display page
     final json = res.data;
-    popAllAndPush(context, MaterialPageRoute(builder: (context) => CodeDisplayPage(token: json["token"])));
+    popAllAndPush(context, MaterialPageRoute(builder: (context) => ReceiverCodePage(token: json["token"])));
   }
 
   @override

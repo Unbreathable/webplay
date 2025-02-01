@@ -1,22 +1,23 @@
 import 'dart:async';
 
 import 'package:client/lobby_page.dart';
+import 'package:client/receiver/receiver_stream_page.dart';
 import 'package:client/vertical_spacing.dart';
 import 'package:client/web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:signals/signals_flutter.dart';
 
-class CodeDisplayPage extends StatefulWidget {
+class ReceiverCodePage extends StatefulWidget {
   final String token;
 
-  const CodeDisplayPage({super.key, required this.token});
+  const ReceiverCodePage({super.key, required this.token});
 
   @override
-  State<CodeDisplayPage> createState() => _CodeDisplayPageState();
+  State<ReceiverCodePage> createState() => _ReceiverCodePageState();
 }
 
-class _CodeDisplayPageState extends State<CodeDisplayPage> with SignalsMixin {
+class _ReceiverCodePageState extends State<ReceiverCodePage> with SignalsMixin {
   final showLoading = signal(false);
   final name = signal<String?>(null);
   final code = signal<String?>(null);
@@ -59,6 +60,7 @@ class _CodeDisplayPageState extends State<CodeDisplayPage> with SignalsMixin {
       final json = res.data;
       if (json["exists"]) {
         if (json["completed"]) {
+          popAllAndPush(context, MaterialPageRoute(builder: (context) => ReceiverStreamPage(token: widget.token)));
           sendLog("challenge completed");
           return;
         }
