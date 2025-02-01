@@ -130,6 +130,7 @@ class _ReceiverStreamPageState extends State<ReceiverStreamPage> with SignalsMix
                 child: Padding(
                   padding: const EdgeInsets.all(defaultSpacing),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
                         onPressed: () => popAllAndPush(context, MaterialPageRoute(builder: (context) => LobbyPage())),

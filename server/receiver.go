@@ -83,6 +83,7 @@ func checkReceiverState(c *fiber.Ctx) error {
 			return c.JSON(fiber.Map{
 				"exists":    true,
 				"completed": true,
+				"accepted":  currentReceiver.currentSender.Accepted,
 				"name":      currentReceiver.currentSender.Name,
 				"code":      currentReceiver.currentSender.Challenge,
 			})
@@ -91,6 +92,7 @@ func checkReceiverState(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"exists":    true,
 			"completed": false,
+			"accepted":  currentReceiver.currentSender.Accepted,
 			"name":      currentReceiver.currentSender.Name,
 			"code":      currentReceiver.currentSender.Challenge,
 		})

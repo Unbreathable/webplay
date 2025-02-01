@@ -19,6 +19,7 @@ class ReceiverCodePage extends StatefulWidget {
 
 class _ReceiverCodePageState extends State<ReceiverCodePage> with SignalsMixin {
   final showLoading = signal(false);
+  final accepted = signal(false);
   final name = signal<String?>(null);
   final code = signal<String?>(null);
   bool success = false;
@@ -70,6 +71,7 @@ class _ReceiverCodePageState extends State<ReceiverCodePage> with SignalsMixin {
           showLoading.value = false;
           name.value = json["name"];
           code.value = json["code"];
+          accepted.value = json["accepted"];
         });
       } else {
         sendLog("waiting..");
@@ -136,7 +138,23 @@ class _ReceiverCodePageState extends State<ReceiverCodePage> with SignalsMixin {
               ),
             ),
             Watch(
-              (context) => Text(name.value ?? "Waiting for a connection..", style: Theme.of(context).textTheme.bodyLarge!.copyWith()),
+              (context) => Animate(
+                effects: [
+                  ExpandEffect(
+                    curve: Curves.ease,
+                    alignment: Alignment.center,
+                    axis: Axis.vertical,
+                  ),
+                ],
+                target: accepted.value ? 1 : 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: defaultSpacing),
+                  child: Text("Sender has been accepted", style: Theme.of(context).textTheme.bodyLarge),
+                ),
+              ),
+            ),
+            Watch(
+              (context) => Text(name.value ?? "Waiting for a connection..", style: Theme.of(context).textTheme.bodyLarge!),
             ),
             verticalSpacing(sectionSpacing),
             ElevatedButton(
