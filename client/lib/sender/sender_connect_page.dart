@@ -32,7 +32,7 @@ class _SenderConnectPageState extends State<SenderConnectPage> {
 
     // Get the screen/app the user wants to stream
     DesktopCapturerSource? source;
-    if (!Platform.isLinux) {
+    if (!Platform.isLinux || bool.fromEnvironment("LINUX")) {
       final c = context;
       if (c.mounted) {
         source = await showDialog<DesktopCapturerSource>(context: c, builder: (context) => ScreenSelectDialog());
