@@ -200,6 +200,8 @@ func createSenderConnection(c *fiber.Ctx) error {
 // Handle the on track event of a sender
 func handleSenderTrack(tr *webrtc.TrackRemote, r *webrtc.RTPReceiver) {
 
+	log.Println("received track")
+
 	// Make sure there isn't another track already
 	currentReceiver.Mutex.Lock()
 	if currentReceiver.currentSender.currentTrack != nil {

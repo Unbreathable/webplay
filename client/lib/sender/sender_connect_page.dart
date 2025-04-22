@@ -30,20 +30,6 @@ class _SenderConnectPageState extends State<SenderConnectPage> {
     // Wait quickly
     await Future.delayed(500.ms);
 
-    // Get the screen/app the user wants to stream
-    DesktopCapturerSource? source;
-    if (!Platform.isLinux || bool.fromEnvironment("LINUX")) {
-      final c = context;
-      if (c.mounted) {
-        source = await showDialog<DesktopCapturerSource>(context: c, builder: (context) => ScreenSelectDialog());
-        if (source == null) {
-          return;
-        }
-      } else {
-        return;
-      }
-    }
-
     // Create a new webrtc connection
     final peer = await createPeerConnection({
       "iceServers": [
@@ -57,11 +43,13 @@ class _SenderConnectPageState extends State<SenderConnectPage> {
 
     // Create the stream
     try {
+      List<DesktopCapturerSource> sources = await desktopCapturer.getSources(types: [SourceType.Screen]);
       final stream = await navigator.mediaDevices.getDisplayMedia(<String, dynamic>{
         'video': {
-          'deviceId': source != null ? {'exact': source.id} : null,
+          'deviceId': {'exact': sources.first.id},
           'mandatory': {'frameRate': 30.0}
-        }
+        },
+        'audio': false,
       });
 
       _localStream = stream;
