@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:client/lobby_page.dart';
 import 'package:client/util/screen_select_dialog.dart';
@@ -31,14 +32,16 @@ class _SenderConnectPageState extends State<SenderConnectPage> {
 
     // Get the screen/app the user wants to stream
     DesktopCapturerSource? source;
-    final c = context;
-    if (c.mounted) {
-      source = await showDialog<DesktopCapturerSource>(context: c, builder: (context) => ScreenSelectDialog());
-      if (source == null) {
+    if (!Platform.isLinux) {
+      final c = context;
+      if (c.mounted) {
+        source = await showDialog<DesktopCapturerSource>(context: c, builder: (context) => ScreenSelectDialog());
+        if (source == null) {
+          return;
+        }
+      } else {
         return;
       }
-    } else {
-      return;
     }
 
     // Create a new webrtc connection
@@ -56,7 +59,7 @@ class _SenderConnectPageState extends State<SenderConnectPage> {
     try {
       final stream = await navigator.mediaDevices.getDisplayMedia(<String, dynamic>{
         'video': {
-          'deviceId': {'exact': source.id},
+          'deviceId': source != null ? {'exact': source.id} : null,
           'mandatory': {'frameRate': 30.0}
         }
       });
